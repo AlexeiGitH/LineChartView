@@ -9,16 +9,16 @@
 import Cocoa
 
 class StringAttributesManager {
-    static func  createStringAttributes(font: NSFont = NSFont.systemFont(ofSize: 12), alignment: NSTextAlignment = .center, color: NSColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)) -> [String:NSObject] {
+    static func  createStringAttributes(font: NSFont = NSFont.systemFont(ofSize: 12), alignment: NSTextAlignment = .center, color: NSColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)) -> [NSAttributedStringKey:Any] {
         
-        let paraStyle = NSParagraphStyle.default().mutableCopy()
+        let paraStyle = NSParagraphStyle.default.mutableCopy()
             as! NSMutableParagraphStyle
         paraStyle.alignment = alignment
         
         let attributes = [
-            NSFontAttributeName: font,
-            NSParagraphStyleAttributeName: paraStyle,
-            NSForegroundColorAttributeName: color
+            NSAttributedStringKey.font: font,
+            NSAttributedStringKey.paragraphStyle: paraStyle,
+            NSAttributedStringKey.foregroundColor: color
         ]
         return attributes
     }
