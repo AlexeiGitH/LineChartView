@@ -34,7 +34,8 @@
 		C8B3C04C1EB6DFE10076C713 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C8C9488E1F5895290026DB4F /* LineChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineChartView.swift; sourceTree = "<group>"; };
 		C8C948901F589AE80026DB4F /* NSLayoutConstraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSLayoutConstraint.swift; sourceTree = "<group>"; };
-		C8D0F84D1F8A97A0001A8721 /* customized1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = customized1.png; sourceTree = "<group>"; };
+		C8D0F84E1F8AEDD9001A8721 /* customized1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = customized1.png; sourceTree = "<group>"; };
+		C8D0F84F1F8AEDD9001A8721 /* customized2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = customized2.png; sourceTree = "<group>"; };
 		C8D429BF1F855F2700FAC206 /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
 		C8E025F71F65A686006C557F /* Drawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Drawer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -91,7 +92,8 @@
 			isa = PBXGroup;
 			children = (
 				C8D429BF1F855F2700FAC206 /* default.png */,
-				C8D0F84D1F8A97A0001A8721 /* customized1.png */,
+				C8D0F84E1F8AEDD9001A8721 /* customized1.png */,
+				C8D0F84F1F8AEDD9001A8721 /* customized2.png */,
 			);
 			path = examples;
 			sourceTree = "<group>";

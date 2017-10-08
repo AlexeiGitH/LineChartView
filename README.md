@@ -15,6 +15,9 @@ or
 ````swift
 let diagram = LineChartView<Int, Double>(frame: diagramView.frame, xValues: xValues, yValues: ratesValues)
 ````
+
+![Default uncustomized](examples/default.png)
+
 Style LineChartView by changing properties
 
 ````swift
@@ -28,7 +31,7 @@ diagram.padding = 40
 diagram.labelsColor(color: NSColor(red: 0.55, green: 1, blue: 0.4, alpha: 1))
 
 ````
-
+![Customized 1](examples/customized1.png)
 ````swift
 
 diagram.hideYGridlines = true
@@ -39,3 +42,4 @@ let font = NSFont.systemFont(ofSize: 8, weight: .ultraLight)
 diagram.editAttributes(font: font, color: NSColor(red: 1, green: 1, blue: 0, alpha: 1))
 
 ````
+![Customized 2](examples/customized2.png)
