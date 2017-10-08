@@ -8,9 +8,9 @@
 
 import Cocoa
 
-class LineChartView<x:CustomStringConvertible, y:Numeric>: NSView {
+public class LineChartView<x:CustomStringConvertible, y:Numeric>: NSView {
     
-    //must be convertable to a CGFloat (so that adhere to Numeric protocol).
+    //must be convertable to a CGFloat (sso that adhere to Numeric protocol).
     private var yPoints: [y] = [] {
         didSet {
             if let max = yPoints.max(by: { (a, b) -> Bool in
@@ -34,76 +34,89 @@ class LineChartView<x:CustomStringConvertible, y:Numeric>: NSView {
     /** False by default.
      If true drawing starts from right to left
      */
-    var reversed = false
+    public var reversed = false
     
-    var chartLineWidth: CGFloat = 1
-    var chartLineColour: NSColor = #colorLiteral(red: 0, green: 0.9411764706, blue: 1, alpha: 1)
-    var chartlineCapStyle: NSLineCapStyle = .buttLineCapStyle
-    var chartlineJoinStyle: NSLineJoinStyle = .roundLineJoinStyle
+    public var chartLineWidth: CGFloat = 1
+    public var chartLineColour: NSColor = #colorLiteral(red: 0, green: 0.9411764706, blue: 1, alpha: 1)
+    public var chartlineCapStyle: NSBezierPath.LineCapStyle = .buttLineCapStyle
+    public var chartlineJoinStyle: NSBezierPath.LineJoinStyle = .roundLineJoinStyle
     
-    var chartPointRadius: CGFloat = 4
-    var chartPointColour: NSColor = #colorLiteral(red: 0, green: 0.9411764706, blue: 1, alpha: 1)
+    public var chartPointRadius: CGFloat = 4
+    public var chartPointColour: NSColor = #colorLiteral(red: 0, green: 0.9411764706, blue: 1, alpha: 1)
     
-    var xAxisLineWidth: CGFloat = 0.6
-    var yAxisLineWidth: CGFloat = 0.6
+    public var xAxisLineWidth: CGFloat = 0.6
+    public var yAxisLineWidth: CGFloat = 0.6
     
-    var xAxisLineColor: NSColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-    var yAxisLineColor: NSColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+    public var xAxisLineColor: NSColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+    public var yAxisLineColor: NSColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+    
+    // ** X & Y Axis
+    ///If true, axis is not displayed. False by default
+    public var hideXAxis = false
+    public var hideYAxis = false
+    
+    public var hideXAxisLabels = false
+    public var hideYAxisLabels = false
+    
     
     // ** GRIDLINES **
-    var xGridlinesWidth: CGFloat = 0.2
-    var yGridlinesWidth: CGFloat = 0.2
+    ///If true, grid lines are displayed. Default is true.
+    public var hideYGridlines = false
+    public var hideXGridlines = false
     
-    var xGridlinesColor: NSColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-    var yGridlinesColor: NSColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+    public var xGridlinesWidth: CGFloat = 0.2
+    public var yGridlinesWidth: CGFloat = 0.2
+    
+    public var xGridlinesColor: NSColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+    public var yGridlinesColor: NSColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
     
     ///By default it shows 3 grid lines
-    var yAxisUnitStep: CGFloat = 1
-    var yAxisLabelsNumberOfDecimal: Int = 2
+    public var yAxisUnitStep: CGFloat = 1
+    public var yAxisLabelsNumberOfDecimal: Int = 2
     
     // these used to scale the graph's Y axis and to put labels on Y axis
     /// Assigned on initialzation, and by default is equal to the Max value of Y points
-    var yAxisMax: CGFloat = 10.0
+    public var yAxisMax: CGFloat = 10.0
     /// Assigned on initialzation, and by default is equal to the Min value of Y points
-    var yAxisMin: CGFloat = 0.0
+    public var yAxisMin: CGFloat = 0.0
     
     ///By default is the same as the number of Y points.
     ///Needs to be set after initialization
-
+    
     // ** PADDING **
     //padding to clear area around the content
     private let minPadding: CGFloat = 20
     
-    var padding: CGFloat = 20 {
+    public var padding: CGFloat = 20 {
         didSet {
             padding = checkPadding(p: padding)
             matchPaddingsToMainPadding()
         }
     }
-    var paddingTop: CGFloat = 20 {
+    public var paddingTop: CGFloat = 20 {
         didSet {
             paddingTop = checkPadding(p: paddingTop)
         }
     }
-    var paddingBottom: CGFloat = 20{
+    public var paddingBottom: CGFloat = 20{
         didSet {
             paddingBottom = checkPadding(p: paddingBottom)
         }
     }
-    var paddingLeft: CGFloat = 20 {
+    public var paddingLeft: CGFloat = 20 {
         didSet {
             paddingLeft = checkPadding(p: paddingLeft)
         }
     }
-    var paddingRight: CGFloat = 20 {
+    public var paddingRight: CGFloat = 20 {
         didSet {
             paddingRight = checkPadding(p: paddingRight)
         }
     }
-
+    
     
     //Text attribute
-    var yAttrs : [String : Any]! = [:] //used to add values of Y axis (lowest, heightest)
+    private var yAttrs : [NSAttributedStringKey : Any]! = [:] //used to add values of Y axis (lowest, heightest)
     
     //MARK:- Private variables
     // used to calculate the distance between point on a X coordinate axis. Should be enough space to place all the xPoints.
@@ -112,26 +125,21 @@ class LineChartView<x:CustomStringConvertible, y:Numeric>: NSView {
     // TODO: Add manual number of intervals. If *manualInterwalWidth* is `true`, the number of intervals is calculated based on the *xIntervalWidth*. If *manualInterwalWidth* is `false`, *numberOfIntervals* used to calculate the *xIntervalWidth*.
     private var numberOfIntervals: Int = 0
     
-    
-
-    
     //MARK:- INIT
-    override init(frame frameRect: NSRect) {
+    public override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
-
+        
         editAttributes()
         resetYAxisUnitStep()
     }
     
-    init(frame frameRect: NSRect, xValues: [x], yValues: [y]) {
+    public init(frame frameRect: NSRect, xValues: [x], yValues: [y]) {
         super.init(frame: frameRect)
-        self.xPoints = xValues
-        self.yPoints = yValues
+        data(xPoints: xValues, yPoints: yValues)
         editAttributes()
-        resetYAxisUnitStep()
     }
     
-    required init?(coder: NSCoder) {
+    public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -145,7 +153,7 @@ class LineChartView<x:CustomStringConvertible, y:Numeric>: NSView {
     }
     
     //MARK:- DRAWING
-    override func draw(_ dirtyRect: NSRect) {
+    public final override func draw(_ dirtyRect: NSRect) {
         drawGraph()
     }
     
@@ -153,8 +161,8 @@ class LineChartView<x:CustomStringConvertible, y:Numeric>: NSView {
     private var currentContext : CGContext? {
         get {
             if #available(OSX 10.10, *) {
-                return NSGraphicsContext.current()?.cgContext
-            } else if let contextPointer = NSGraphicsContext.current()?.graphicsPort {
+                return NSGraphicsContext.current?.cgContext
+            } else if let contextPointer = NSGraphicsContext.current?.graphicsPort {
                 let context: CGContext = Unmanaged.fromOpaque(contextPointer).takeRetainedValue()
                 return context
             }
@@ -162,10 +170,10 @@ class LineChartView<x:CustomStringConvertible, y:Numeric>: NSView {
         }
     }
     
-    private func drawGraph() {
+    private  final func drawGraph() {
         calculateDrawingVariables()
-        drawXAxis()
-        drawYAxis()
+        if !hideXAxis { drawXAxis() }
+        if !hideYAxis { drawYAxis() }
         drawXGridlines()
         drawYGridlines()
         drawGraphLine()
@@ -222,7 +230,7 @@ class LineChartView<x:CustomStringConvertible, y:Numeric>: NSView {
                 let to = NSPoint(x: coordinates.x, y: coordinates.y)
                 
                 drawCircleAt(point: to, radius: chartPointRadius)
-               
+                
                 
                 path.line(to: to)
                 currentPointNumber -= 1
@@ -277,7 +285,6 @@ class LineChartView<x:CustomStringConvertible, y:Numeric>: NSView {
      Additionally it adds two labels that show the min and max values of the Y Axis
      */
     private func drawYAxis() {
-        
         let startX = CGPoint(x: paddingLeft, y: paddingBottom) //left bottom corner
         let endX = CGPoint(x: paddingLeft, y: self.frame.height - paddingTop) //left upper corner
         
@@ -291,96 +298,122 @@ class LineChartView<x:CustomStringConvertible, y:Numeric>: NSView {
     
     //vartical from left to right
     private func drawXGridlines() {
-        guard numberOfIntervals > 0 else {
+        guard numberOfIntervals > 0, hideXAxisLabels != true || hideXGridlines != true else {
             return
         }
         let y = self.frame.height - paddingTop
         for i in 1..<numberOfIntervals {
+            
             let x = xCoordinateFor(column: i)
-            let start = CGPoint(x: x, y: paddingBottom)
-            let end = CGPoint(x: x, y: y)
-            let path = NSBezierPath()
-            path.move(to: start)
-            path.line(to: end)
-            path.lineWidth = xGridlinesWidth
-            xGridlinesColor.set()
-            let pattern: [CGFloat] = [4.0, 0.0]
-            path.setLineDash(pattern, count: 1, phase: 0)
-            path.stroke()
+            if !hideXGridlines {
+                let start = CGPoint(x: x, y: paddingBottom)
+                let end = CGPoint(x: x, y: y)
+                let path = NSBezierPath()
+                path.move(to: start)
+                path.line(to: end)
+                path.lineWidth = xGridlinesWidth
+                xGridlinesColor.set()
+                let pattern: [CGFloat] = [4.0, 0.0]
+                path.setLineDash(pattern, count: 1, phase: 0)
+                path.stroke()
+            }
+            //add Labels
+            if !hideXAxisLabels {
+                let label = "\(xPoints[i])"
+                let labelSize = label.size();
+                let startLabelPoint = CGPoint(x: x-labelSize.width/2, y: paddingBottom-labelSize.height)
+                label.draw(at: startLabelPoint, withAttributes: yAttrs)
+            }
+        }
+        if !hideXAxisLabels {
+            //add 0 label outside of the loop
+            let x = xCoordinateFor(column: 0)
+            let label = "\(xPoints[0])"
+            let labelSize = label.size();
+            let startLabelPoint = CGPoint(x: x-labelSize.width/2, y: paddingBottom-labelSize.height)
+            label.draw(at: startLabelPoint, withAttributes: yAttrs)
         }
     }
     
     //horizontal bottom to top
     private func drawYGridlines() {
-
-        guard yPoints.count > 0 else { return }
+        
+        guard yPoints.count > 0, hideYAxisLabels == false || hideYGridlines == false else { return }
         if yAxisUnitStep <= 0 { yAxisUnitStep = 0.01 } //to avoid devision by 0
-
+        
         //calculate number of grids to display
         let gridNumFloat = round((yAxisMax-yAxisMin)/yAxisUnitStep)
         var numGrids = Int(round(gridNumFloat))
-        let decimalsMultiplier = CGFloat(pow(10, Double(yAxisLabelsNumberOfDecimal)))
+        let decimalsMultiplier = CGFloat(pow(10, 3.0))
         if ( round((gridNumFloat * yAxisUnitStep + yAxisMin)*decimalsMultiplier)/decimalsMultiplier > yAxisMax) {
             numGrids -= 1
         }
         
-        guard  numGrids > 0 else { return }
-        
         let leftX = xCoordinateFor(column: numberOfIntervals-1)
         
-        // add low Y label
-        let value = yAxisMin
-        let yCoord = yCoordinateFor(value: value)
-    
-        let label = String(format: "%.\(yAxisLabelsNumberOfDecimal)f", value)
-        let startLabelPoint = CGPoint(x: paddingLeft, y: yCoord)
-        label.draw(at: startLabelPoint, withAttributes: yAttrs)
+        // add bottom(min) Y label
+        if !hideYAxisLabels {
+            let value = yAxisMin
+            let yCoord = yCoordinateFor(value: value)
+            
+            let label = String(format: "%.\(yAxisLabelsNumberOfDecimal)f", value)
+            let startLabelPoint = CGPoint(x: paddingLeft, y: yCoord)
+            label.draw(at: startLabelPoint, withAttributes: yAttrs)
+        }
+        guard  numGrids > 0 else { return }
         
         // add other labels
         for gridN in 1...numGrids {
             let value = yAxisMin + CGFloat(gridN) * yAxisUnitStep
             let yCoord = yCoordinateFor(value: value)
-            let leftPoint = CGPoint(x: paddingLeft, y: yCoord) //left side
-            let rightPoint = CGPoint(x: leftX, y: yCoordinateFor(value: value)) //left bottom corner
             
-            let path = NSBezierPath()
-            path.move(to: leftPoint)
-            path.line(to: rightPoint)
-            yGridlinesColor.set()
-            let pattern: [CGFloat] = [4.0, 0.0]
-            path.setLineDash(pattern, count: 1, phase: 0)
-            path.stroke()
-            
+            if !hideYGridlines {
+                let leftPoint = CGPoint(x: paddingLeft, y: yCoord) //left side
+                let rightPoint = CGPoint(x: leftX, y: yCoordinateFor(value: value)) //left bottom corner
+                
+                let path = NSBezierPath()
+                path.move(to: leftPoint)
+                path.line(to: rightPoint)
+                yGridlinesColor.set()
+                path.lineWidth = yGridlinesWidth
+                
+                let pattern: [CGFloat] = [4.0, 0.0]
+                path.setLineDash(pattern, count: 1, phase: 0)
+                path.stroke()
+            }
             //Label string
-            let label = String(format: "%.\(yAxisLabelsNumberOfDecimal)f", value)
-            let startLabelPoint = CGPoint(x: paddingLeft, y: yCoord)
-            label.draw(at: startLabelPoint, withAttributes: yAttrs)
+            if !hideYAxisLabels {
+                let label = String(format: "%.\(yAxisLabelsNumberOfDecimal)f", value)
+                let startLabelPoint = CGPoint(x: paddingLeft, y: yCoord)
+                label.draw(at: startLabelPoint, withAttributes: yAttrs)
+            }
         }
     }
-
+    
     
     //MARK: chart Points Positions Calculations
-
+    
     func autoParameters() {
         resetPadding()
     }
     
-    final func editAttributes(font: NSFont = NSFont.systemFont(ofSize: 12), alignment: NSTextAlignment = .left, color: NSColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)) {
-        let paraStyle = NSParagraphStyle.default().mutableCopy()
+    public final func editAttributes(font: NSFont = NSFont.systemFont(ofSize: 11), alignment: NSTextAlignment = .left, color: NSColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)) {
+        let paraStyle = NSParagraphStyle.default.mutableCopy()
             as! NSMutableParagraphStyle
         paraStyle.alignment = alignment
         
         self.yAttrs = [
-            NSFontAttributeName: font,
-            NSParagraphStyleAttributeName: paraStyle,
-            NSForegroundColorAttributeName: color,
+            NSAttributedStringKey.font: font,
+            NSAttributedStringKey.paragraphStyle: paraStyle,
+            NSAttributedStringKey.foregroundColor: color,
             //  NSBackgroundColorAttributeName: NSColor.yellow //for debuging purpose
         ]
     }
-    final func yLabelsColor(color: NSColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)) {
-        changeColorOfYAttributes(toColor: color)
+    
+    public final func labelsColor(color: NSColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)) {
+        changeColorOfAttributes(toColor: color)
     }
-
+    
     ///Sets the padding. Cannot be lower than 20
     func resetPadding() {
         self.padding = minPadding
@@ -393,17 +426,14 @@ class LineChartView<x:CustomStringConvertible, y:Numeric>: NSView {
     final func resetYAxisUnitStep() {
         yAxisUnitStep = ((yAxisMax-yAxisMin)/3)
     }
-    ///To update the chart view when one or more attributes were changed
-    func update() {
+    ///To update the chart view when one or more parameters were changed
+    public final func update() {
         needsDisplay = true
     }
     
     //TODO:- To convert points to the value on a graph
-    override func mouseDown(with event : NSEvent) {
-        
+    public override func mouseDown(with event : NSEvent) {
         let  pointFromNil = convert(event.locationInWindow, from: nil)
-        
-        Swift.print("pointFromNil: \(pointFromNil)")
     }
     
     //MARK:- Private methods
@@ -414,8 +444,8 @@ class LineChartView<x:CustomStringConvertible, y:Numeric>: NSView {
         xIntervalWidth = max((self.frame.width - paddingLeft - paddingRight) / CGFloat(numberOfIntervals-1), CGFloat(1))
     }
     ///Default color is white
-    private func changeColorOfYAttributes(toColor: NSColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)) {
-        self.yAttrs[NSForegroundColorAttributeName] = toColor
+    private func changeColorOfAttributes(toColor: NSColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)) {
+        self.yAttrs[NSAttributedStringKey.foregroundColor] = toColor
     }
     private func checkPadding(p: CGFloat) -> CGFloat {
         return p < minPadding ? minPadding : p
@@ -452,4 +482,6 @@ class LineChartView<x:CustomStringConvertible, y:Numeric>: NSView {
         // y = (height - padding from top and bottom) * proportion + marhin to have a space between the bottom of a view and the point
         return (self.frame.height - paddingTop - paddingBottom) * proportion + paddingBottom
     }
-   }
+}
+
+
