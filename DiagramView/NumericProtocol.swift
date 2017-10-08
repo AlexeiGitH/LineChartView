@@ -8,12 +8,12 @@
 
 import Foundation
 
-protocol Numeric: Comparable, Equatable {
+public protocol Numeric: Comparable {
     static func +(lhs: Self, rhs: Self) -> Self
     static func -(lhs: Self, rhs: Self) -> Self
     static func *(lhs: Self, rhs: Self) -> Self
     static func /(lhs: Self, rhs: Self) -> Self
-    //    func %(lhs: Self, rhs: Self) -> Self
+    //    public func %(lhs: Self, rhs: Self) -> Self
     
     init(_ v:Float)
     init(_ v:Double)
@@ -34,27 +34,28 @@ protocol Numeric: Comparable, Equatable {
     func _asOther<T:Numeric>() -> T
 }
 
-extension Numeric {
+public extension Numeric {
     
     // Default implementation of init(fromNumeric:) simply gets the inputted value
     // to coerce itself to the same type as the initialiser is called on
     // (the generic parameter T in _asOther() is inferred to be the same type as self)
-    init<T:Numeric>(fromNumeric numeric: T) { self = numeric._asOther() }
+    public init<T:Numeric>(fromNumeric numeric: T) { self = numeric._asOther() }
 }
 
 // Implementations of _asOther() – they simply call the given initialisers listed
 // in the protocol requirement (it's required for them to be repeated like this,
 // as the compiler won't know which initialiser you're referring to otherwise)
-extension Float   : Numeric { func _asOther<T:Numeric>() -> T { return T(self) }}
-extension Double  : Numeric {func _asOther<T:Numeric>() -> T { return T(self) }}
-extension CGFloat : Numeric {func _asOther<T:Numeric>() -> T { return T(self) }}
-extension Int     : Numeric {func _asOther<T:Numeric>() -> T { return T(self) }}
-extension Int8    : Numeric {func _asOther<T:Numeric>() -> T { return T(self) }}
-extension Int16   : Numeric {func _asOther<T:Numeric>() -> T { return T(self) }}
-extension Int32   : Numeric {func _asOther<T:Numeric>() -> T { return T(self) }}
-extension Int64   : Numeric {func _asOther<T:Numeric>() -> T { return T(self) }}
-extension UInt    : Numeric {func _asOther<T:Numeric>() -> T { return T(self) }}
-extension UInt8   : Numeric {func _asOther<T:Numeric>() -> T { return T(self) }}
-extension UInt16  : Numeric {func _asOther<T:Numeric>() -> T { return T(self) }}
-extension UInt32  : Numeric {func _asOther<T:Numeric>() -> T { return T(self) }}
-extension UInt64  : Numeric {func _asOther<T:Numeric>() -> T { return T(self) }}
+extension Float   : Numeric {public func _asOther<T:Numeric>() -> T { return T(self) }}
+extension Double  : Numeric {public func _asOther<T:Numeric>() -> T { return T(self) }}
+extension CGFloat : Numeric {public func _asOther<T:Numeric>() -> T { return T(self) }}
+extension Int     : Numeric {public func _asOther<T:Numeric>() -> T { return T(self) }}
+extension Int8    : Numeric {public func _asOther<T:Numeric>() -> T { return T(self) }}
+extension Int16   : Numeric {public func _asOther<T:Numeric>() -> T { return T(self) }}
+extension Int32   : Numeric {public func _asOther<T:Numeric>() -> T { return T(self) }}
+extension Int64   : Numeric {public func _asOther<T:Numeric>() -> T { return T(self) }}
+extension UInt    : Numeric {public func _asOther<T:Numeric>() -> T { return T(self) }}
+extension UInt8   : Numeric {public func _asOther<T:Numeric>() -> T { return T(self) }}
+extension UInt16  : Numeric {public func _asOther<T:Numeric>() -> T { return T(self) }}
+extension UInt32  : Numeric {public func _asOther<T:Numeric>() -> T { return T(self) }}
+extension UInt64  : Numeric {public func _asOther<T:Numeric>() -> T { return T(self) }}
+
