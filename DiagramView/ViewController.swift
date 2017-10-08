@@ -28,25 +28,13 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         self.view.wantsLayer = true
         self.view.layer?.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1).cgColor
         
-        let ratesValues = [
-            19.10,
-            19.34,
-            19.25,
-            19.50,
-            19.30,
-            19.70,
-            19.55,
-            19.60,
-            19.20,
-            19.3,
-            19.10,
-            19.0
-        ]
+        let ratesValues = [19.10, 19.34,19.25,19.50,19.30,19.70,19.55,19.60,19.20,19.3,19.10,19.0]
         let xValues = Array(1...12)
         
-        diagram = LineChartView<Int, Double>(frame: diagramView.frame)
-        diagram.data(xPoints: xValues, yPoints: ratesValues)
+//        diagram = LineChartView<Int, Double>(frame: diagramView.frame)
+//        diagram.data(xPoints: xValues, yPoints: ratesValues)
         
+        diagram = LineChartView<Int, Double>(frame: diagramView.frame, xValues: xValues, yValues: ratesValues)
         diagramView.addSubview(diagram)
         paddingTopLeft.delegate = self
         paddingTopRight.delegate = self
@@ -56,41 +44,8 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         let cstr = NSLayoutConstraint.centeredFullSize(forView: diagram, inView: diagramView)
         cstr.forEach({ $0.isActive = true })
     }
-    
-    func Padding() {
-        diagram.padding = 40
-        diagram.update()
-        printPaddings()
-        timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(PaddingL), userInfo: nil, repeats: false)
-    }
-    func PaddingL() {
-        diagram.paddingLeft = 20
-        diagram.update()
-        printPaddings()
-        timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(PaddingT), userInfo: nil, repeats: false)
-    }
-    func PaddingT() {
-        diagram.paddingTop = 20
-        diagram.update()
-        printPaddings()
-        timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(PaddingR), userInfo: nil, repeats: false)
-    }
-    func PaddingR() {
-        diagram.paddingRight = 20
-        diagram.update()
-        printPaddings()
-        timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(PaddingB), userInfo: nil, repeats: false)
-    }
-    func PaddingB() {
-        diagram.paddingBottom = 20
-        diagram.update()
-        printPaddings()
-        timer.invalidate()
-    }
-    func printPaddings() {
-        print("Padding: \(diagram.padding)")
-        print("Left: \(diagram.paddingLeft) | Top: \(diagram.paddingTop) | Right: \(diagram.paddingRight) | Bottom: \(diagram.paddingBottom)")
-    }
+
+
     override var representedObject: Any? {
         didSet {
             // Update the view, if already loaded.
@@ -100,6 +55,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     private enum PaddingSide {
         case Top, Right, Left, Bottom
     }
+    
     private func changePadding(newValue: CGFloat, side: PaddingSide) {
         switch side {
         case .Top:
