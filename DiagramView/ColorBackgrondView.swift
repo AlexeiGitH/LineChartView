@@ -8,11 +8,11 @@
 
 import Cocoa
 
-class ColorBackgrondView: NSView {
-
-    @IBInspectable var backgroundColor: NSColor = #colorLiteral(red: 0.06274510175, green: 0, blue: 0.1921568662, alpha: 1)
+public class ColorBackgrondView: NSView {
     
-    override func draw(_ dirtyRect: NSRect) {
+    @IBInspectable public var backgroundColor: NSColor = #colorLiteral(red: 0.06274510175, green: 0, blue: 0.1921568662, alpha: 1)
+    
+    public override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
         
         // Drawing code here.
@@ -22,3 +22,4 @@ class ColorBackgrondView: NSView {
     }
     
 }
+
