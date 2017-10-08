@@ -24,6 +24,7 @@
 		C82625D61F622C4600B2DD08 /* NumericProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumericProtocol.swift; sourceTree = "<group>"; };
 		C82625D81F637C6000B2DD08 /* AttributesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributesManager.swift; sourceTree = "<group>"; };
 		C887A6111F75AB5300E2FD0B /* ColorBackgrondView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorBackgrondView.swift; sourceTree = "<group>"; };
+		C8A2BA431F83DF7600B58365 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		C8AD4A851F7D82D400660F69 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StringExtensions.swift; path = ../../../Libraries/Utilities/StringExtensions.swift; sourceTree = "<group>"; };
 		C8B3C0401EB6DFE10076C713 /* DiagramView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiagramView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8B3C0431EB6DFE10076C713 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -33,6 +34,8 @@
 		C8B3C04C1EB6DFE10076C713 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C8C9488E1F5895290026DB4F /* LineChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineChartView.swift; sourceTree = "<group>"; };
 		C8C948901F589AE80026DB4F /* NSLayoutConstraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSLayoutConstraint.swift; sourceTree = "<group>"; };
+		C8D0F84D1F8A97A0001A8721 /* customized1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = customized1.png; sourceTree = "<group>"; };
+		C8D429BF1F855F2700FAC206 /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
 		C8E025F71F65A686006C557F /* Drawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Drawer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -78,8 +81,19 @@
 				C8B3C0491EB6DFE10076C713 /* Main.storyboard */,
 				C8AD4A851F7D82D400660F69 /* StringExtensions.swift */,
 				C8B3C04C1EB6DFE10076C713 /* Info.plist */,
+				C8D429BD1F855F0E00FAC206 /* examples */,
+				C8A2BA431F83DF7600B58365 /* README.md */,
 			);
 			path = DiagramView;
+			sourceTree = "<group>";
+		};
+		C8D429BD1F855F0E00FAC206 /* examples */ = {
+			isa = PBXGroup;
+			children = (
+				C8D429BF1F855F2700FAC206 /* default.png */,
+				C8D0F84D1F8A97A0001A8721 /* customized1.png */,
+			);
+			path = examples;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -115,6 +129,7 @@
 					C8B3C03F1EB6DFE10076C713 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = Y82LPN7ZL4;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -294,7 +309,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.AlexKozachenko.DiagramView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -308,7 +324,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.AlexKozachenko.DiagramView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
